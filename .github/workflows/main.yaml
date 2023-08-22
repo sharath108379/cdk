@@ -16,6 +16,8 @@ jobs:
       - name: cdk bootstrap
         working-directory: ./infra
         run: |
+          npm install -g aws-cdk
+          npm install -g aws-cdk-lib
           cdk bootstrap aws://010248213882/ap-northeast-1
 
       - name: cdk synth
