@@ -10,7 +10,7 @@ jobs:
       - name: cdk bootstrap
         uses: youyo/aws-cdk-github-actions@v2
         with:
-          cdk_subcommand: 'bootstrap'
+          cdk_subcommand: 'bootstrap 010248213882/ap-northeast-1'
           working_dir: 'infra'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
