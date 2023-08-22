@@ -8,9 +8,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: cdk bootstrap
-        uses: tj-actions/aws-cdk@v4
+        uses: youyo/aws-cdk-github-actions@v2
         with:
-          cdk_subcommand: "bootstrap"
+          cdk_subcommand: 'bootstrap'
           working_dir: 'infra'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
