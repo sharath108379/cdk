@@ -10,6 +10,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - run: npm ci
+      - run: npm test
       - run: npm install -g aws-cdk
       - run: npm install -g aws-cdk-lib
       - run: npm ls
