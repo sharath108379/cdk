@@ -11,6 +11,7 @@ on:
         description: environment to deploy to
         required: true
 
+
 jobs:
   build:
     name: Build and Test AWS CDK Typescript Stack
@@ -45,6 +46,7 @@ jobs:
           nvm install 16
           node -v
           npm -v
+          npm install
       
       - name: Install cdktf cli
         run: |
