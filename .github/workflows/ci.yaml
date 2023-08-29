@@ -71,6 +71,7 @@ jobs:
           npm install --save-dev @types/node
 
       - name: deploy resources
+        working-directory: ./cdk-tf   
         run: |
           cdktf synth 
           cdktf diff
