@@ -82,3 +82,6 @@ jobs:
         run: |
           sudo cdktf synth 
           sudo cdktf diff
+          echo $DATABRICKS_HOST
+          echo $DATABRICKS_TOKEN
+          sudo cdktf deploy --auto-approve

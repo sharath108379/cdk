@@ -80,4 +80,6 @@ jobs:
       - name: deploy resources
         working-directory: ./cdk-tf   
         run: |
+          echo $DATABRICKS_HOST
+          echo $DATABRICKS_TOKEN
           sudo cdktf deploy --auto-approve 
