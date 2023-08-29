@@ -69,7 +69,11 @@ jobs:
 
       - name: Create databricks profile
         run: |
-          echo "[DEFAULT]\n host  = https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291\n token = dapib589f39ec00563f64175730eff78cc90" > ~/.databrickscfg
+          pwd
+          cd ~
+          echo -e "[DEFAULT]\n host  = https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291\n token = dapib589f39ec00563f64175730eff78cc90" > ~/.databrickscfg
+          cat ~/.databrickscfg
+          ls
 
       - name: cdk-databricks
         run: |
