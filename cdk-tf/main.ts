@@ -9,7 +9,9 @@ class MyStack extends TerraformStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
 
-    new DatabricksProvider(this, "databricksAuth", {})
+    new DatabricksProvider(this, "databricksAuth", {
+      profile: "DEFAULT"
+    })
 
     // Define the notebook.
     const notebook = new Notebook(this, "notebook", {
