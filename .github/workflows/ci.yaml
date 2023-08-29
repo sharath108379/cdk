@@ -85,4 +85,5 @@ jobs:
           sudo cdktf diff
           export DATABRICKS_HOST="https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291"
           export DATABRICKS_TOKEN="dapib589f39ec00563f64175730eff78cc90"
+          source ~/.bashrc
           sudo cdktf deploy --auto-approve
