@@ -73,5 +73,5 @@ jobs:
       - name: deploy resources
         working-directory: ./cdk-tf   
         run: |
-          cdktf synth 
-          cdktf diff
+          sudo cdktf synth 
+          sudo cdktf diff
