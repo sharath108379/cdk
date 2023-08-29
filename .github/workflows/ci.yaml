@@ -46,8 +46,12 @@ jobs:
           nvm install 16
           node -v
           npm -v
+          
+      - name: Install dependencies
+        working-directory: ./cdk-tf
+        run: |
           npm install
-      
+
       - name: Install cdktf cli
         run: |
           npm install -g cdktf-cli
