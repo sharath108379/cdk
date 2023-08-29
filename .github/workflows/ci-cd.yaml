@@ -1,0 +1,20 @@
+name: CI-CD
+
+on:
+  pull_request_review:
+    types: [submitted]
+  
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  dev-ci:
+    uses: ./.github/workflows/ci.yaml
+    with:
+      environment: dev
+    name: Build and Test AWS CDK Typescript Stack for dev
+    if: github.event.review.state == 'approved'
+    secrets: inherit
+
