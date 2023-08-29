@@ -1,6 +1,7 @@
 import { Construct } from "constructs";
 import { App, TerraformOutput, TerraformStack } from "cdktf";
 import { DatabricksProvider } from '@cdktf/provider-databricks/lib/provider';
+import { DataDatabricksCurrentUser } from '@cdktf/provider-databricks/lib/data-databricks-current-user';
 import { Notebook } from '@cdktf/provider-databricks/lib/notebook';
 import { Job } from '@cdktf/provider-databricks/lib/job';
 import * as vars from "./vars";
@@ -14,10 +15,12 @@ class MyStack extends TerraformStack {
       host: vars.host,
       token: vars.token
     })
+	
+	const currentUser = new DataDatabricksCurrentUser(this, "currentUser", {});
 
     // Define the notebook.
     const notebook = new Notebook(this, "notebook", {
-      path: `${vars.userEmail}/CDKTF/${vars.resourcePrefix}-notebook.py`,
+      path: `${currentUser.home}/CDKTF/${vars.resourcePrefix}-notebook.py`,
       language: "PYTHON",
       contentBase64: Buffer.from("display(spark.range(10))", "utf8").toString("base64")
     });
@@ -31,11 +34,11 @@ class MyStack extends TerraformStack {
         nodeTypeId: vars.nodeTypeId
       },
       notebookTask: {
-        notebookPath: `${vars.userEmail}/CDKTF/${vars.resourcePrefix}-notebook.py`
+        notebookPath: `${currentUser.home}/CDKTF/${vars.resourcePrefix}-notebook.py`
       },
       emailNotifications: {
-        onSuccess: [ vars.userEmail ],
-        onFailure: [ vars.userEmail ]
+        onSuccess: [ currentUser.userName ],
+        onFailure: [ currentUser.userName ]
       }
     });
 
@@ -50,6 +53,9 @@ class MyStack extends TerraformStack {
   }
 }
 
+const app = new App();
+new MyStack(app, "cdktf-demo");
+app.synth();
 const app = new App();
 new MyStack(app, "cdktf-demo");
 app.synth();
