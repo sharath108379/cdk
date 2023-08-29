@@ -11,7 +11,8 @@ class MyStack extends TerraformStack {
     super(scope, name);
 
     new DatabricksProvider(this, "databricksAuth", {
-      profile: "DEFAULT"
+      host: vars.host,
+      token: vars.token
     })
 
     // Define the notebook.
