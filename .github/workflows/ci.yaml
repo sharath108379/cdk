@@ -45,6 +45,7 @@ jobs:
           nvm install 16
           node -v
           npm -v
+          npm install
       
       - name: Install cdktf cli
         run: |
