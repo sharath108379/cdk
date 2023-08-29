@@ -69,12 +69,11 @@ jobs:
 
       - name: Create databricks profile
         run: |
-          pwd
-          cd ~
-          echo -e "[DEFAULT]\nhost  = https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291\ntoken = dapib589f39ec00563f64175730eff78cc90" > ~/.databrickscfg
-          cat ~/.databrickscfg
-          ls
-
+          echo "dapib589f39ec00563f64175730eff78cc90" > token-file
+          databricks configure --host https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291 --token-file token-file
+          rm -f token-file
+          databricks fs ls
+          
       - name: cdk-databricks
         run: |
           npm install @cdktf/provider-databricks --force
