@@ -14,7 +14,15 @@ jobs:
     uses: ./.github/workflows/ci.yaml
     with:
       environment: dev
-    name: Build and Test AWS CDK Typescript Stack for dev
+    name: Build and Test CDK Typescript Stack for dev
     if: github.event.review.state == 'approved'
+    secrets: inherit
+
+  dev-cd:
+    uses: ./.github/workflows/cd.yaml
+    with:
+      environment: dev
+    name: Deploy CDK Typescript Stack for dev
+    if: github.event.pull_request.merged == true
     secrets: inherit
 
