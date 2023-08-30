@@ -55,6 +55,3 @@ class MyStack extends TerraformStack {
 const app = new App();
 new MyStack(app, "cdktf-demo");
 app.synth();
-const app = new App();
-new MyStack(app, "cdktf-demo");
-app.synth();
