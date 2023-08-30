@@ -25,3 +25,19 @@ jobs:
     name: Deploy AWS and Databricks stack for dev
     if: github.event.pull_request.merged == true
     secrets: inherit
+
+  qa-ci:
+    uses: ./.github/workflows/ci.yaml
+    needs: dev-cd
+    with:
+      environment: qa
+    name: Build, Test AWS and Databricks stack for qa
+    secrets: inherit
+
+  qa-cd:
+    uses: ./.github/workflows/cd.yaml
+    needs: qa-ci
+    with:
+      environment: qa
+    name: Deploy AWS and Databricks stack for qa
+    secrets: inherit
