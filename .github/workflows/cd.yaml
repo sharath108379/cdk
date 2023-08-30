@@ -34,19 +34,7 @@ jobs:
       - name: Build CDK Stack
         working-directory: ./cdk-aws
         run: npm run build
-      
-      - uses: Fooji/create-aws-profile-action@v1
-        with:
-          profile: cdkprofile
-          key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: ${{ secrets.AWS_DEFAULT_REGION }}
-      
-      - name: setup aws config file
-        run: |
-          export AWS_CONFIG_FILE=./cdk-aws/.aws/config
-          ls
-      
+           
       - name: Bootstrap
         working-directory: ./cdk-aws
         run: "npx cdk bootstrap"
