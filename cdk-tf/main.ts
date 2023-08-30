@@ -37,7 +37,6 @@ class MyStack extends TerraformStack {
     // Define the job to run the notebook.
     const job = new Job(this, "job", {
       name: `${vars.resourcePrefix}-job`,
-      jobId: vars.jobId 
       newCluster: {
         numWorkers: vars.numWorkers,
         sparkVersion: vars.sparkVersion,
