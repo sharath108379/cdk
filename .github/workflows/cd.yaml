@@ -42,6 +42,11 @@ jobs:
           secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ${{ secrets.AWS_DEFAULT_REGION }}
       
+      - name: setup aws config file
+        run: |
+          export AWS_CONFIG_FILE=./cdk-aws/.aws/config
+          ls
+      
       - name: Bootstrap
         working-directory: ./cdk-aws
         run: "npx cdk bootstrap --profile cdkprofile"
