@@ -13,8 +13,50 @@ on:
 
 
 jobs:
-  build:
-    name: Build and Test AWS CDK Stack
+  deploy_aws:
+    name: Deploy AWS CDK Typescript Stack
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Initiated By User
+        run: echo $GITHUB_ACTOR
+
+      - name: Check Out Code
+        uses: actions/checkout@v3.1.0
+
+      - name: Install Node
+        uses: actions/setup-node@v3.5.0
+
+      - name: Install Dependencies
+        working-directory: ./cdk-tf 
+        run: npm ci
+
+      - name: Build CDK Stack
+        working-directory: ./cdk-tf 
+        run: npm run build
+      
+      - uses: Fooji/create-aws-profile-action@v1
+        with:
+          profile: cdkprofile
+          key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_DEFAULT_REGION }}
+      
+      - name: Bootstrap
+        working-directory: ./cdk-tf 
+        run: "npx cdk bootstrap --profile cdkprofile"
+
+      - name: Deploy AWS CDK Stack
+        working-directory: ./cdk-tf 
+        run: "npx cdk deploy MyFirstCdkStack --ci --require-approval never --no-asset-metadata"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  
+  deploy_databricks:
+    #Deploy Databricks CDKTF Stack
+    name: Deploy Databricks CDKTF Stack
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
@@ -67,11 +109,6 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
           databricks -v
 
-      - name: Create databricks profile
-        run: |
-          export DATABRICKS_HOST="https://dbc-d51bcf67-babb.cloud.databricks.com/?o=5947007577556291"
-          export DATABRICKS_TOKEN="dapib589f39ec00563f64175730eff78cc90"
-          
       - name: cdk-databricks
         run: |
           npm install @cdktf/provider-databricks --force
@@ -80,6 +117,4 @@ jobs:
       - name: deploy resources
         working-directory: ./cdk-tf   
         run: |
-          echo $DATABRICKS_HOST
-          echo $DATABRICKS_TOKEN
           sudo cdktf deploy --auto-approve 
