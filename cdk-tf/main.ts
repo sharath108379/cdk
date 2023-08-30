@@ -6,6 +6,7 @@ import { Notebook } from '@cdktf/provider-databricks/lib/notebook';
 import { Job } from '@cdktf/provider-databricks/lib/job';
 import * as vars from "./vars";
 
+
 class MyStack extends TerraformStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
