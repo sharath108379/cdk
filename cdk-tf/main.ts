@@ -10,7 +10,10 @@ class MyStack extends TerraformStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
 
-    new DatabricksProvider(this, "databricksAuth", {})
+    new DatabricksProvider(this, "databricksAuth", {
+      host: vars.host,
+      token: vars.token
+    })
 	
 	const currentUser = new DataDatabricksCurrentUser(this, "currentUser", {});
 
