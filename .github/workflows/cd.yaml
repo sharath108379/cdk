@@ -43,6 +43,7 @@ jobs:
           region: ${{ secrets.AWS_DEFAULT_REGION }}
       
       - name: Bootstrap
+        working-directory: ./cdk-aws
         run: "npx cdk bootstrap --profile cdkprofile"
 
       - name: Deploy AWS CDK Stack
