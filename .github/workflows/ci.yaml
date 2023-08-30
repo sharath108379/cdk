@@ -32,15 +32,19 @@ jobs:
         uses: actions/setup-node@v3.5.0
 
       - name: Install Dependencies
+        working-directory: ./cdk-aws
         run: npm ci
 
       - name: Build CDK Stack
+        working-directory: ./cdk-aws
         run: npm run build
 
       - name: Run Unit Tests
+        working-directory: ./cdk-aws
         run: npm run test
 
       - name: Diff AWS CDK Stack
+        working-directory: ./cdk-aws
         run: "npx cdk diff MyFirstCdkStack --ci --require-approval never --no-asset-metadata"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
