@@ -14,7 +14,7 @@ jobs:
     uses: ./.github/workflows/ci.yaml
     with:
       environment: dev
-    name: Build and Test CDK Typescript Stack for dev
+    name: Build, Test AWS and Databricks stack for dev
     if: github.event.review.state == 'approved'
     secrets: inherit
 

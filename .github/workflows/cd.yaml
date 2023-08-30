@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test AWS CDK Typescript Stack
+    name: Build and Test AWS CDK Stack
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
