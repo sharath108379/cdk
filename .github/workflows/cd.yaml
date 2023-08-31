@@ -114,7 +114,13 @@ jobs:
         working-directory: ./cdk-tf   
         run: |
           sudo cdktf deploy --auto-approve --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
-     
+  
+  airflow_dag:
+    #DAG to s3
+    name: Deploy Databricks CDKTF Stack
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --follow-symlinks
@@ -123,23 +129,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          SOURCE_DIR: 'dag/qa'
-          DEST_DIR: 'sample'
-  
-  airflow_dag:
-    #DAG files to s3
-    name: DAG files to s3
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --follow-symlinks
-         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          SOURCE_DIR: 'dag/'${{ inputs.environment }}
+          SOURCE_DIR: dag/${{ inputs.environment }}
           DEST_DIR: 'sample'
           
