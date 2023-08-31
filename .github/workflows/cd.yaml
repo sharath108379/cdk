@@ -50,6 +50,14 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - uses: shallwefootball/s3-upload-action@master
+        name: Upload dag to S3
+        with:
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: ${{ secrets.MWAA_BUCKET }}
+          source_dir: './dag/dev'
   
   deploy_databricks:
     #Deploy Databricks CDKTF Stack
@@ -115,3 +123,11 @@ jobs:
         working-directory: ./cdk-tf   
         run: |
           sudo cdktf deploy --auto-approve --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
+     
+      - uses: shallwefootball/s3-upload-action@master
+        name: Upload dag to S3
+        with:
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: ${{ secrets.MWAA_BUCKET }}
+          source_dir: './dag/qa'
