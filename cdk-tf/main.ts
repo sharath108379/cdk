@@ -3,7 +3,7 @@ import { App, TerraformOutput, TerraformStack, TerraformVariable } from "cdktf";
 import { DatabricksProvider } from '@cdktf/provider-databricks/lib/provider';
 import { DataDatabricksCurrentUser } from '@cdktf/provider-databricks/lib/data-databricks-current-user';
 import { Notebook } from '@cdktf/provider-databricks/lib/notebook';
-import { Job } from '@cdktf/provider-databricks/lib/job';
+// import { Job } from '@cdktf/provider-databricks/lib/job';
 import * as vars from "./vars";
 
 
