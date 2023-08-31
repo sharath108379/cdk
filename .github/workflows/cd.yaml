@@ -50,14 +50,16 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      - uses: shallwefootball/s3-upload-action@master
-        name: Upload dag to S3
-        with:
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_bucket: ${{ secrets.MWAA_BUCKET }}
-          source_dir: 'dag/dev'
-          destination_dir: 'sample'
+      - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --follow-symlinks --delete
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
+        AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        SOURCE_DIR: 'dag/dev'
+        DEST_DIR: 'sample'
   
   deploy_databricks:
     #Deploy Databricks CDKTF Stack
@@ -124,11 +126,13 @@ jobs:
         run: |
           sudo cdktf deploy --auto-approve --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
      
-      - uses: shallwefootball/s3-upload-action@master
-        name: Upload dag to S3
-        with:
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_bucket: ${{ secrets.MWAA_BUCKET }}
-          source_dir: 'dag/qa'
-          destination_dir: 'sample'
+      - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --follow-symlinks --delete
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
+        AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        SOURCE_DIR: 'dag/qa'
+        DEST_DIR: 'sample'
