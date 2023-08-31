@@ -120,7 +120,6 @@ jobs:
     name: DAG to s3
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    working-directory: ./dag
     steps:
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -130,6 +129,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          SOURCE_DIR: ${{ inputs.environment }}
+          SOURCE_DIR: ./dag/${{ inputs.environment }}
           DEST_DIR: 'sample'
           
