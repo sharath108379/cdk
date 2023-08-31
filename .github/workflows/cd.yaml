@@ -122,8 +122,8 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
       - run: |
-          echo pwd
-          ls
+          pwd
+          ls .
 
       - uses: jakejarvis/s3-sync-action@master
         with:
