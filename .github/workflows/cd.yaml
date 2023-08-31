@@ -114,16 +114,21 @@ jobs:
   #       working-directory: ./cdk-tf   
   #       run: |
   #         sudo cdktf deploy --auto-approve --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
-  
+        
   airflow_dag:
     #DAG to s3
     name: DAG to s3
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-      - run: |
-          pwd
-          ls .
+      - name: check env
+        run: echo ${{ inputs.environment }} 
+      
+      - name: Initiated By User
+        run: echo $GITHUB_ACTOR
+
+      - name: Check Out Code
+        uses: actions/checkout@v3.1.0
 
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -133,6 +138,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_BUCKET: ${{ secrets.MWAA_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          SOURCE_DIR: 'dag/dev'
+          SOURCE_DIR: dag/${{ inputs.environment }}
           DEST_DIR: 'sample'
           
