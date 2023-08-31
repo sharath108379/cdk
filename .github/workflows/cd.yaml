@@ -57,6 +57,7 @@ jobs:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.MWAA_BUCKET }}
+          destination_dir: 'sample'
           source_dir: './dag/dev'
   
   deploy_databricks:
@@ -130,4 +131,5 @@ jobs:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.MWAA_BUCKET }}
+          destination_dir: 'sample'
           source_dir: './dag/qa'
