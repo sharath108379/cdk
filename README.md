@@ -1,12 +1,11 @@
-# Welcome to CDK TypeScript project
+# Welcome to CICD project
 
 Following is the directory structure of the project -
 * .github folder contains GitHub workflows
 * cdk-aws folder contains cdk project for aws resources
 * cdk-tf folder contains cdk project for databricks resources
 * dag folder contains airflow related files
-
-
+* CICD.pdf contains CICD workflow diagram
 
 ## github 
 * workflows folder -
