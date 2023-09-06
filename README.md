@@ -5,7 +5,7 @@ Following is the directory structure of the project -
 * cdk-aws folder contains cdk project for aws resources
 * cdk-tf folder contains cdk project for databricks resources
 * dag folder contains airflow related files
-* CICD.pdf contains CICD workflow diagram
+* cicd.png contains CICD workflow diagram
 
 ## github 
 * workflows folder -
