@@ -31,7 +31,7 @@ class MyStack extends TerraformStack {
     const notebook = new Notebook(this, "notebook", {
       path: `${currentUser.home}/CDKTF/${vars.resourcePrefix}-notebook.py`,
       language: "PYTHON",
-      contentBase64: Buffer.from("display(spark.range(30))", "utf8").toString("base64")
+      contentBase64: Buffer.from("display(spark.range(40))", "utf8").toString("base64")
     });
 
     // Define the job to run the notebook.
