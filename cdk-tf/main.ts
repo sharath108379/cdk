@@ -3,7 +3,7 @@ import { App, TerraformOutput, TerraformStack, TerraformVariable } from "cdktf";
 import { DatabricksProvider } from '@cdktf/provider-databricks/lib/provider';
 import { DataDatabricksCurrentUser } from '@cdktf/provider-databricks/lib/data-databricks-current-user';
 import { Notebook } from '@cdktf/provider-databricks/lib/notebook';
-// import { Job } from '@cdktf/provider-databricks/lib/job';
+import { Job } from '@cdktf/provider-databricks/lib/job';
 import * as vars from "./vars";
 
 class MyStack extends TerraformStack {
@@ -34,31 +34,31 @@ class MyStack extends TerraformStack {
       contentBase64: Buffer.from("display(spark.range(20))", "utf8").toString("base64")
     });
 
-    // // Define the job to run the notebook.
-    // const job = new Job(this, "job", {
-    //   name: `${vars.resourcePrefix}-job`,
-    //   newCluster: {
-    //     numWorkers: vars.numWorkers,
-    //     sparkVersion: vars.sparkVersion,
-    //     nodeTypeId: vars.nodeTypeId
-    //   },
-    //   notebookTask: {
-    //     notebookPath: `${currentUser.home}/CDKTF/${vars.resourcePrefix}-notebook.py`
-    //   },
-    //   emailNotifications: {
-    //     onSuccess: [ currentUser.userName ],
-    //     onFailure: [ currentUser.userName ]
-    //   }
-    // });
+    // Define the job to run the notebook.
+    const job = new Job(this, "job", {
+      name: `${vars.resourcePrefix}-job`,
+      newCluster: {
+        numWorkers: vars.numWorkers,
+        sparkVersion: vars.sparkVersion,
+        nodeTypeId: vars.nodeTypeId
+      },
+      notebookTask: {
+        notebookPath: `${currentUser.home}/CDKTF/${vars.resourcePrefix}-notebook.py`
+      },
+      emailNotifications: {
+        onSuccess: [ currentUser.userName ],
+        onFailure: [ currentUser.userName ]
+      }
+    });
 
     // Output the notebook and job URLs.
     new TerraformOutput(this, "Notebook URL", {
       value: notebook.url
     });
 
-    // new TerraformOutput(this, "Job URL", {
-    //   value: job.url
-    // });
+    new TerraformOutput(this, "Job URL", {
+      value: job.url
+    });
   }
 }
 
