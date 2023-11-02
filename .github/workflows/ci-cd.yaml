@@ -1,13 +1,13 @@
 name: CI-CD
 
 on:
-  pull_request_review:
-    types: [submitted]
-
   pull_request:
     branches:
       - main
-    types: [closed]
+  
+  push:
+    branches:
+      - main
 
 jobs:
   dev-ci:
@@ -15,7 +15,6 @@ jobs:
     with:
       environment: dev
     name: Build, Test AWS and Databricks stack for dev
-    if: github.event.review.state == 'approved'
     secrets: inherit
 
   dev-cd:
