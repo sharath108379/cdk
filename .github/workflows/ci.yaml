@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -116,3 +117,8 @@ jobs:
         run: |
           sudo cdktf synth 
           sudo cdktf diff --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
+      
+      - name: ls output
+        working-directory: ./cdk-tf
+        run: |
+          ls -ltr
