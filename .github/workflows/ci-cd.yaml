@@ -15,6 +15,7 @@ jobs:
     with:
       environment: dev
     name: Build, Test AWS and Databricks stack for dev
+    if: ${{ github.event_name != 'push' }}
     secrets: inherit
 
   dev-cd:
@@ -22,7 +23,7 @@ jobs:
     with:
       environment: dev
     name: Deploy AWS and Databricks stack for dev
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event_name == 'push' }}
     secrets: inherit
 
   qa-ci:
