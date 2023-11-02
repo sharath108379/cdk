@@ -113,6 +113,7 @@ jobs:
       - name: deploy resources
         working-directory: ./cdk-tf   
         run: |
+          sudo cdktf synth
           sudo cdktf deploy --auto-approve --var='host=${{ secrets.DATABRICKS_HOST }}' --var='token=${{ secrets.DATABRICKS_TOKEN }}'
         
   airflow_dag:
